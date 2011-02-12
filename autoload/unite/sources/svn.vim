@@ -70,8 +70,8 @@ let s:svn_commit    = {
 \   'is_selectable' : 1,
 \}
 function! s:svn_commit.func(candidates)
-    call system('svn ci '
-\             . join(map(a:candidates, 'v:val.action__path')))
+    execute '! svn ci '
+\         . join(map(a:candidates, 'v:val.action__path'))
     execute 'Unite svn/status'
 endfunction
 call unite#custom_action('source/svn/status/jump_list',
@@ -87,8 +87,8 @@ let s:svn_add  = {
 \   'is_selectable' : 1,
 \}
 function! s:svn_add.func(candidates)
-    call system('svn add '
-\             . join(map(a:candidates, 'v:val.action__path')))
+    execute '! svn add '
+\             . join(map(a:candidates, 'v:val.action__path'))
     execute 'Unite svn/status'
 endfunction
 call unite#custom_action('source/svn/status/jump_list',
@@ -101,8 +101,8 @@ let s:svn_revert    = {
 \   'is_selectable' : 1,
 \}
 function! s:svn_revert.func(candidates)
-    call system('svn revert '
-\             . join(map(a:candidates, 'v:val.action__path')))
+    execute '! svn revert '
+\             . join(map(a:candidates, 'v:val.action__path'))
     execute 'Unite svn/status'
 endfunction
 call unite#custom_action('source/svn/status/jump_list',
@@ -115,7 +115,7 @@ let s:svn_blame = {
 \   'is_selectable' : 0,
 \}
 function! s:svn_blame.func(candidates)
-    call system('svn blame' . a:candidates.action__path . ' | lv')
+    execute '! svn blame' . a:candidates.action__path . ' | lv'
 endfunction
 call unite#custom_action('source/svn/status/jump_list',
 \                        'blame',
@@ -127,8 +127,8 @@ let s:svn_delete  = {
 \   'is_selectable' : 1,
 \}
 function! s:svn_delete.func(candidates)
-    call system('svn delete '
-\             . join(map(a:candidates, 'v:val.action__path')))
+    execute '! svn delete '
+\             . join(map(a:candidates, 'v:val.action__path'))
     execute 'Unite svn/status'
 endfunction
 call unite#custom_action('source/svn/status/jump_list',
@@ -141,7 +141,7 @@ let s:svn_log   = {
 \   'is_selectable' : 0,
 \}
 function! s:svn_log.func(candidates)
-    call system('svn log' . a:candidates.action__path . ' | lv')
+    execute '! svn log' . a:candidates.action__path . ' | lv'
 endfunction
 call unite#custom_action('source/svn/status/jump_list',
 \                        'log',
