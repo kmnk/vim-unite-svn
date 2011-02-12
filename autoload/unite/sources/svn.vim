@@ -111,11 +111,11 @@ call unite#custom_action('source/svn/status/jump_list',
 "}}}
 "{{{ svn blame
 let s:svn_blame = {
-\   'description'   : 'svn blame this position. pipe result to lv',
+\   'description'   : 'svn blame this position',
 \   'is_selectable' : 0,
 \}
 function! s:svn_blame.func(candidates)
-    execute '! svn blame' . a:candidates.action__path . ' | lv'
+    execute '! svn blame ' . a:candidates.action__path
 endfunction
 call unite#custom_action('source/svn/status/jump_list',
 \                        'blame',
@@ -137,11 +137,11 @@ call unite#custom_action('source/svn/status/jump_list',
 "}}}
 "{{{ svn log
 let s:svn_log   = {
-\   'description'   : 'svn log this position. pipe result to lv',
+\   'description'   : 'svn log this position',
 \   'is_selectable' : 0,
 \}
 function! s:svn_log.func(candidates)
-    execute '! svn log' . a:candidates.action__path . ' | lv'
+    execute '! svn log ' . a:candidates.action__path
 endfunction
 call unite#custom_action('source/svn/status/jump_list',
 \                        'log',
