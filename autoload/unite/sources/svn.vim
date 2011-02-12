@@ -19,13 +19,13 @@ let s:svn_status_source = {
 \ }
 
 function! s:svn_status_source.gather_candidates(args, context)
-    let l:status_obj    = unite#libs#svn#status#new()
-    return map(l:status_obj.get_normalized_data(), '{
-\       "word" : v:val.word,
-\       "source" : "svn/status",
-\       "kind" : "jump_list",
-\       "action__path" : v:val.path,
-\       "action__line" : 1,
+    let l:obj    = unite#libs#svn#status#new()
+    return map(l:obj.get_normalized_data(), '{
+\       "word"          : v:val.word,
+\       "source"        : "svn/status",
+\       "kind"          : "jump_list",
+\       "action__path"  : v:val.path,
+\       "action__line"  : 1,
 \   }')
 endfunction
 "}}}
@@ -56,10 +56,28 @@ function! s:svn_diff_source.gather_candidates(args, context)
 endfunction
 "}}}
 
+"{{{ svn/blame
+let s:svn_blame_source  = {
+\   'name'  : 'svn/blame',
+\}
+
+function! s:svn_blame_source.gather_candidates(args, context)
+    let l:obj   = unite#libs#svn#blame#new(a:args)
+    return map(l:obj.get_normalized_data(), '{
+\       "word"          : v:val.word,
+\       "source"        : "svn/blame",
+\       "kind"          : "jump_list",
+\       "action__path"  : v:val.path,
+\       "action__line"  : v:val.line_num,
+\   }')
+endfunction
+"}}}
+
 function! unite#sources#svn#define()
     return [
 \       s:svn_status_source,
-\       s:svn_diff_source
+\       s:svn_diff_source,
+\       s:svn_blame_source,
 \   ]
 endfunction
 
@@ -115,7 +133,7 @@ let s:svn_blame = {
 \   'is_selectable' : 0,
 \}
 function! s:svn_blame.func(candidates)
-    execute '! svn blame ' . a:candidates.action__path
+    execute 'Unite svn/blame:' . a:candidates.action__path
 endfunction
 call unite#custom_action('source/svn/status/jump_list',
 \                        'blame',
