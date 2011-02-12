@@ -82,7 +82,7 @@ endfunction
 
 function! s:find_line_num_from(line)
     let l:matches   = matchlist(a:line, s:block_pattern())
-    return l:matches[6]
+    return l:matches[4]
 endfunction
 "}}}
 
@@ -172,7 +172,6 @@ endfunction
 function! unite#libs#svn#diff#new(args)
     let l:obj   = {}
     let l:obj.data_list = s:get_data_list(a:args)
-echo l:obj.data_list
 
     function l:obj.get_normalized_data()
         let l:data  = []
