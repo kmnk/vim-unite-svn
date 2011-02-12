@@ -105,8 +105,6 @@ endfunction
 function! s:gen_data_by(list)
     return {
 \       'change'    : s:get_label_of(0, a:list[1]),
-\       'lock'      : s:get_label_of(2, a:list[3]),
-\       'switch'    : s:get_label_of(4, a:list[5]),
 \       'path'      : a:list[8],
 \   }
 endfunction
@@ -119,8 +117,8 @@ function! unite#libs#svn#status#new()
         return map(
 \           self.data_list, '{
 \               "word"      : printf(
-\                   "%s [%s][%s][%s]",
-\                   v:val.path, v:val.change, v:val.lock, v:val.switch
+\                   "%-12s %s",
+\                   "[" . v:val.change . "]", v:val.path
 \               ),
 \               "path"  : v:val.path,
 \           }'
