@@ -173,26 +173,39 @@ function! unite#libs#svn#diff#new(args)
     let l:obj   = {}
     let l:obj.data_list = s:get_data_list(a:args)
 
-    function l:obj.get_normalized_data()
+    function l:obj.get_unite_normalized_data(source)
         let l:data  = []
         for file in self.data_list
             for block in file.blocks
                 call add(l:data, {
-\                   'word'      : '-+-+- diff of ' . file.path . ' '
-\                               . '(old ' . file.old_revision . ') '
-\                               . '(new ' . file.new_revision . ') ',
-\                   'line_num'  : block.line_num,
-\                   'path'      : file.path,
+\                   'word'          : '-+-+- diff of ' . file.path . ' '
+\                                   . '(old ' . file.old_revision . ') '
+\                                   . '(new ' . file.new_revision . ') ',
+\                   'source'        : a:source,
+\                   'kind'          : 'jump_list',
+\                   'action__path'  : file.path,
+\                   'action__line'  : block.line_num,
 \               })
                 for line in block.lines
                     call add(l:data, {
-\                       'word'      : line.line,
-\                       'line_num'  : line.line_num,
-\                       'path'      : file.path,
+\                       'word'          : line.line,
+\                       'source'        : a:source,
+\                       'kind'          : 'jump_list',
+\                       'action__path'  : file.path,
+\                       'action__line'  : line.line_num,
 \                   })
                 endfor
             endfor
         endfor
+        if 0 == len(l:data)
+            call add(l:data, {
+\               'word'      : 'no different or some error has occured',
+\               'source'    : a:source,
+\               'kind'      : 'common',             
+\               'action__path'  : '',
+\               'action__line'  : 0,
+\           })
+        endif
         return l:data
     endfunction
 

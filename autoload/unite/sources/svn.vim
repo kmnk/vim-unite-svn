@@ -7,78 +7,40 @@
 let s:save_cpo  = &cpo
 set cpo&vim
 
-let s:ret_list  = []
-
 function! s:str2list(str)
     return split(a:str, '\n')
 endfunction
 
-"{{{ svn/status
-let s:svn_status_source = {
-\   'name' : 'svn/status',
-\ }
+let s:svn_commands  = [
+\   'status',
+\   'diff',
+\   'blame',
+\]
 
-function! s:svn_status_source.gather_candidates(args, context)
-    let l:obj    = unite#libs#svn#status#new()
-    return map(l:obj.get_normalized_data(), '{
-\       "word"          : v:val.word,
-\       "source"        : "svn/status",
-\       "kind"          : "jump_list",
-\       "action__path"  : v:val.path,
-\       "action__line"  : 1,
-\   }')
+function! s:define_sources()
+    let l:sources   = []
+    for l:svn_command in s:svn_commands
+        let l:source  = {
+\           'svn_command'   : l:svn_command,
+\           'name'          : 'svn/' . l:svn_command,
+\       }
+        function! l:source.gather_candidates(args, context)
+            let l:obj   = unite#libs#svn#{self.svn_command}#new(a:args)
+            return map(l:obj.get_unite_normalized_data(self.name), '{
+\               "word"          : v:val.word,
+\               "source"        : v:val.source,
+\               "kind"          : v:val.kind,
+\               "action__path"  : v:val.action__path,
+\               "action__line"  : v:val.action__line,
+\           }')
+        endfunction
+        call add(l:sources, l:source)
+    endfor
+    return l:sources
 endfunction
-"}}}
-
-"{{{ svn/diff
-let s:svn_diff_source   = {
-\   'name' : 'svn/diff',
-\}
-
-function! s:svn_diff_source.gather_candidates(args, context)
-    let l:obj   = unite#libs#svn#diff#new(a:args)
-    let l:ret_list  = l:obj.get_normalized_data()
-    if (0 == len(l:ret_list))
-        return [{
-\           'word'      : 'no different or some error has occured',
-\           'source'    : 'svn/diff',
-\           'kind'      : 'common',             
-\       }]
-    else
-        return map(l:ret_list, '{
-\           "word"          : v:val.word,
-\           "source"        : "svn/diff",
-\           "kind"          : "jump_list",
-\           "action__path"  : v:val.path,
-\           "action__line"  : v:val.line_num,
-\       }')
-    endif
-endfunction
-"}}}
-
-"{{{ svn/blame
-let s:svn_blame_source  = {
-\   'name'  : 'svn/blame',
-\}
-
-function! s:svn_blame_source.gather_candidates(args, context)
-    let l:obj   = unite#libs#svn#blame#new(a:args)
-    return map(l:obj.get_normalized_data(), '{
-\       "word"          : v:val.word,
-\       "source"        : "svn/blame",
-\       "kind"          : "jump_list",
-\       "action__path"  : v:val.path,
-\       "action__line"  : v:val.line_num,
-\   }')
-endfunction
-"}}}
 
 function! unite#sources#svn#define()
-    return [
-\       s:svn_status_source,
-\       s:svn_diff_source,
-\       s:svn_blame_source,
-\   ]
+    return s:define_sources()
 endfunction
 
 "{{{ kind

@@ -109,18 +109,21 @@ function! s:gen_data_by(list)
 \   }
 endfunction
 
-function! unite#libs#svn#status#new()
+function! unite#libs#svn#status#new(args)
     let l:obj   = {}
     let l:obj.data_list = s:get_data_list()
 
-    function l:obj.get_normalized_data()
+    function l:obj.get_unite_normalized_data(source)
         return map(
 \           self.data_list, '{
 \               "word"      : printf(
 \                   "%-12s %s",
 \                   "[" . v:val.change . "]", v:val.path
 \               ),
-\               "path"  : v:val.path,
+\               "source"        : a:source,
+\               "kind"          : "jump_list",
+\               "action__path"  : v:val.path,
+\               "action__line"  : 1,
 \           }'
 \       )
     endfunction

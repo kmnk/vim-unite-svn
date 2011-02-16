@@ -73,7 +73,7 @@ function! unite#libs#svn#blame#new(args)
     let l:obj   = {}
     let l:obj.data  = s:get_data(a:args[0])
 
-    function l:obj.get_normalized_data()
+    function l:obj.get_unite_normalized_data(source)
         return map(self.data.list, '{
 \           "word"      : printf(
 \               "% " . self.data.str_len.line_num . "s "
@@ -85,8 +85,10 @@ function! unite#libs#svn#blame#new(args)
 \               v:val.user,
 \               v:val.line,
 \           ),
-\           "path"      : v:val.path,
-\           "line_num"  : v:val.line_num,
+\           "source"        : a:source,
+\           "kind"          : "jump_list",
+\           "action__path"  : v:val.path,
+\           "action__line"  : v:val.line_num,
 \       }')
     endfunction
 
