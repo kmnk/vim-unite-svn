@@ -169,9 +169,12 @@ function! s:gen_data_by(list)
 \   }
 endfunction
 
-function! unite#libs#svn#diff#new(args)
+function! unite#libs#svn#diff#new()
     let l:obj   = {}
-    let l:obj.data_list = s:get_data_list(a:args)
+
+    function l:obj.initialize(args)
+        let self.data_list  = s:get_data_list(a:args)
+    endfunction
 
     function l:obj.get_unite_normalized_data(source)
         let l:data  = []

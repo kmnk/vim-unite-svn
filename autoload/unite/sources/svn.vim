@@ -24,9 +24,11 @@ function! s:define_sources()
 \           'svn_command'   : l:svn_command,
 \           'name'          : 'svn/' . l:svn_command,
 \       }
+
         function! l:source.gather_candidates(args, context)
-            let l:obj   = unite#libs#svn#{self.svn_command}#new(a:args)
-            return map(l:obj.get_unite_normalized_data(self.name), '{
+            let l:obj   = unite#libs#svn#{self.svn_command}#new()
+            call l:obj.initialize(a:args)
+            return map(obj.get_unite_normalized_data(self.name), '{
 \               "word"          : v:val.word,
 \               "source"        : v:val.source,
 \               "kind"          : v:val.kind,
@@ -34,6 +36,7 @@ function! s:define_sources()
 \               "action__line"  : v:val.action__line,
 \           }')
         endfunction
+
         call add(l:sources, l:source)
     endfor
     return l:sources

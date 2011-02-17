@@ -69,6 +69,7 @@ function! s:get_symbols_of(column)
     return keys(s:symbol_tables[a:column])
 endfunction
 
+"{{{ line pattern
 function! s:line_pattern()
     let l:pattern
 \       = '^'
@@ -89,6 +90,7 @@ endfunction
 function! s:is_status_line(line)
     return a:line =~ s:line_pattern()
 endfunction
+"}}}
 
 function! s:get_data_list()
     return map(
@@ -109,9 +111,12 @@ function! s:gen_data_by(list)
 \   }
 endfunction
 
-function! unite#libs#svn#status#new(args)
+function! unite#libs#svn#status#new()
     let l:obj   = {}
-    let l:obj.data_list = s:get_data_list()
+
+    function l:obj.initialize(args)
+        let self.data_list  = s:get_data_list()
+    endfunction
 
     function l:obj.get_unite_normalized_data(source)
         return map(

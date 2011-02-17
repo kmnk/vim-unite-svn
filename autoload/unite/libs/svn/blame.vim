@@ -69,9 +69,12 @@ function! s:get_data(arg)
 endfunction
 "}}}
 
-function! unite#libs#svn#blame#new(args)
+function! unite#libs#svn#blame#new()
     let l:obj   = {}
-    let l:obj.data  = s:get_data(a:args[0])
+
+    function l:obj.initialize(args)
+        let self.data   = s:get_data(a:args[0])
+    endfunction
 
     function l:obj.get_unite_normalized_data(source)
         return map(self.data.list, '{
