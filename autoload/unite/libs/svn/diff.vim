@@ -17,7 +17,7 @@ endfunction
 
 "{{{ index pattern
 function! s:index_pattern()
-    return '^Index: \(.\+\)$'
+    return '\m^Index: \(.\+\)$'
 endfunction
 
 function! s:is_index_line(line)
@@ -32,7 +32,8 @@ endfunction
 
 "{{{ revision pettern
 function! s:old_revision_pattern()
-    return '^---.\+(\(revision [0-9]\+\))$\|'
+    return '\m'
+\        . '^---.\+(\(revision [0-9]\+\))$\|'
 \        . '^---.\+(\(working copy\))$'
 endfunction
 
@@ -50,7 +51,8 @@ function! s:find_old_revision_from(line)
 endfunction
 
 function! s:new_revision_pattern()
-    return '^+++.\+(\(revision [0-9]\+\))$\|'
+    return '\m'
+\        . '^+++.\+(\(revision [0-9]\+\))$\|'
 \        . '^+++.\+(\(working copy\))$'
 endfunction
 
@@ -70,7 +72,8 @@ endfunction
 
 "{{{ block pattern
 function! s:block_pattern()
-    return '^@@ '
+    return '\m'
+\        . '^@@ '
 \        . '-\([0-9]\+\)\(,\([0-9]\+\)\)\= '
 \        . '+\([0-9]\+\)\(,\([0-9]\+\)\)\= '
 \        . '@@$'
@@ -88,7 +91,7 @@ endfunction
 
 "{{{ lines pattern
 function! s:old_line_pattern()
-    return '^-.\+$'
+    return '\m^-.\+$'
 endfunction
 
 function! s:is_old_line(line)
@@ -96,7 +99,7 @@ function! s:is_old_line(line)
 endfunction
 
 function! s:new_line_pattern()
-    return '^+.\+$'
+    return '\m^+.\+$'
 endfunction
 
 function! s:is_new_line(line)
@@ -104,7 +107,7 @@ function! s:is_new_line(line)
 endfunction
 
 function! s:def_line_pattern()
-    return '^[-+ ].\{}$'
+    return '\m^[-+ ].\{}$'
 endfunction
 
 function! s:is_def_line(line)

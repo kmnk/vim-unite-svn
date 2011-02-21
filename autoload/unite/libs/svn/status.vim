@@ -72,7 +72,7 @@ endfunction
 "{{{ line pattern
 function! s:line_pattern()
     let l:pattern
-\       = '^'
+\       = '\m^'
 \       . join(
 \           map(range(0, len(s:symbol_tables) - 1), '
 \               ''\([''

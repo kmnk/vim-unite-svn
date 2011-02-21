@@ -17,7 +17,7 @@ endfunction
 
 "{{{ line pattern
 function! s:line_pattern()
-    return '^'
+    return '\m^'
 \        . '\s\{}\(\d\+\)'
 \        . '\s\{}\([^[:space:]]\+\)'
 \        . '\s\(.\{}\)$'
