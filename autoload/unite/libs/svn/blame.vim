@@ -73,6 +73,12 @@ function! unite#libs#svn#blame#new()
     let l:obj   = {}
 
     function l:obj.initialize(args)
+        if 0 == len(a:args)
+            let l:target    = expand('%')
+        else
+            let l:target    = a:args[0]
+        endif
+        let self.data   = s:get_data(l:target)
         let self.data   = s:get_data(a:args[0])
     endfunction
 
