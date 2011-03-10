@@ -79,7 +79,6 @@ function! unite#libs#svn#blame#new()
             let l:target    = a:args[0]
         endif
         let self.data   = s:get_data(l:target)
-        let self.data   = s:get_data(a:args[0])
     endfunction
 
     function l:obj.get_unite_normalized_data(source)
