@@ -18,7 +18,6 @@ let s:svn_commit    = {
 function! s:svn_commit.func(candidates)
     execute '! svn ci '
 \         . join(map(a:candidates, 'v:val.action__path'))
-    execute 'Unite svn/status'
 endfunction
 let s:svn_add  = {
 \   'description'   : 'svn add this position',
@@ -27,7 +26,6 @@ let s:svn_add  = {
 function! s:svn_add.func(candidates)
     execute '! svn add '
 \             . join(map(a:candidates, 'v:val.action__path'))
-    execute 'Unite svn/status'
 endfunction
 let s:svn_revert    = {
 \   'description'   : 'svn revert this position',
@@ -36,7 +34,6 @@ let s:svn_revert    = {
 function! s:svn_revert.func(candidates)
     execute '! svn revert '
 \             . join(map(a:candidates, 'v:val.action__path'))
-    execute 'Unite svn/status'
 endfunction
 let s:svn_blame = {
 \   'description'   : 'svn blame this position',
@@ -52,7 +49,6 @@ let s:svn_delete  = {
 function! s:svn_delete.func(candidates)
     execute '! svn delete '
 \             . join(map(a:candidates, 'v:val.action__path'))
-    execute 'Unite svn/status'
 endfunction
 let s:svn_log   = {
 \   'description'   : 'svn log this position',
