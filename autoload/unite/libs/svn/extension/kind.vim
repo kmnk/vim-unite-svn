@@ -65,6 +65,13 @@ function! s:svn_diff.func(candidates)
     execute 'Unite svn/diff:'
 \         . join(map(a:candidates, 'v:val.action__path'), ':')
 endfunction
+let s:svn_resolved   = {
+\   'description'   : 'svn resolved this position',
+\   'is_selectable' : 1,
+\}
+function! s:svn_resolved.func(candidates)
+    execute '! svn resolved ' . a:candidates.action__path
+endfunction
 
 function! unite#libs#svn#extension#kind#define()
 
