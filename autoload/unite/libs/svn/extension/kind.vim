@@ -70,7 +70,8 @@ let s:svn_resolved   = {
 \   'is_selectable' : 1,
 \}
 function! s:svn_resolved.func(candidates)
-    execute '! svn resolved ' . a:candidates.action__path
+    execute '! svn resolved '
+\             . join(map(a:candidates, 'v:val.action__path'))
 endfunction
 
 function! unite#libs#svn#extension#kind#define()
