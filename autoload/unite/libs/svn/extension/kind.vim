@@ -117,6 +117,11 @@ function! unite#libs#svn#extension#kind#define()
     \                        'di',
     \                        'diff')
     "}}}
+    "{{{ svn resolved
+    call unite#custom_action('source/svn/status/jump_list',
+    \                        'resolved',
+    \                        s:svn_resolved)
+    "}}}
     "}}}
 
 endfunction
