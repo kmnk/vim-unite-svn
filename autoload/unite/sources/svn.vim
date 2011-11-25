@@ -15,6 +15,7 @@ let s:svn_commands  = [
 \   'status',
 \   'diff',
 \   'blame',
+\   'info',
 \]
 
 function! s:define_sources()
